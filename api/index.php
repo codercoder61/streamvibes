@@ -271,7 +271,7 @@ const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 
         
 function getImageUrl(path) {
-  if (!path) return '/placeholder.png';
+  if (!path) return '/placeholder-logo.png';
   return `${IMAGE_BASE_URL}${path}`;
 }
 
@@ -550,7 +550,7 @@ function renderSearchResults(results) {
 
         const image = result.poster_path
             ? getImageUrl(result.poster_path)
-            : "../public/no_image.jpg";
+            : "/no_image.jpg";
 
         return `
             <a
