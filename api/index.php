@@ -107,6 +107,12 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+        #loader,#noFound,#resultsUi,#notfound{
+display:none;
+}
+.section{
+display:none;
+}
     </style>
 </head>
 <body class="font-sans antialiased">

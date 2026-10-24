@@ -160,6 +160,12 @@ $url = 'https://streamvibe.lovestoblog.com/watch.php?id='.$showId;
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+        #loader,#noFound,#resultsUi,#notfound{
+display:none;
+}
+.section{
+display:none;
+}
     </style>
 </head>
 <body class="min-h-screen bg-background text-foreground font-sans antialiased">    
