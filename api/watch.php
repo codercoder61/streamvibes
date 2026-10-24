@@ -1,7 +1,7 @@
-<?php 
-    if(isset($_GET['id'])){
-        $showId = $_GET["id"];
-    }
+<?php
+if (isset($_GET['id'])) {
+    $showId = $_GET['id'];
+}
 if (!preg_match('/^[0-9]+$/', $showId)) {
     http_response_code(400);
     exit('Invalid TV show ID');
@@ -16,8 +16,8 @@ if (!$token) {
     exit('TMDB configuration missing');
 }
 
-$apiUrl = 'https://api.themoviedb.org/3/tv/' .
-          rawurlencode($showId) . '?language=en-US';
+$apiUrl = 'https://api.themoviedb.org/3/tv/'.
+          rawurlencode($showId).'?language=en-US';
 
 $ch = curl_init($apiUrl);
 
@@ -25,10 +25,10 @@ curl_setopt_array($ch, [
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_HTTPHEADER => [
         'accept: application/json',
-        'Authorization: Bearer ' . $token
+        'Authorization: Bearer '.$token,
     ],
     CURLOPT_CONNECTTIMEOUT => 5,
-    CURLOPT_TIMEOUT => 10
+    CURLOPT_TIMEOUT => 10,
 ]);
 
 $response = curl_exec($ch);
@@ -44,20 +44,21 @@ if (!is_array($show) || empty($show['original_name'])) {
     exit('Unable to retrieve TV show details');
 }
 
-function esc($value) {
+function esc($value)
+{
     return htmlspecialchars(
-        (string)$value,
+        (string) $value,
         ENT_QUOTES | ENT_SUBSTITUTE,
         'UTF-8'
     );
 }
 
 $title = $show['original_name'];
-$description = $show['overview'] ?: 'Watch ' . $title . ' online.';
+$description = $show['overview'] ?: 'Watch '.$title.' online.';
 $poster = !empty($show['backdrop_path'])
-    ? 'https://image.tmdb.org/t/p/w1280' . $show['backdrop_path']
+    ? 'https://image.tmdb.org/t/p/w1280'.$show['backdrop_path']
     : '';
-$url = 'https://streamvibe.lovestoblog.com/watch.php?id=' . $showId;
+$url = 'https://streamvibe.lovestoblog.com/watch.php?id='.$showId;
 ?>
 <!DOCTYPE html>
 <html lang="en" class="dark">
@@ -67,19 +68,19 @@ $url = 'https://streamvibe.lovestoblog.com/watch.php?id=' . $showId;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- SEO -->
-    <title><?= esc($title) ?></title>
+    <title><?php echo esc($title); ?></title>
 
     <meta property="og:type" content="video.other">
-    <meta property="og:title" content="<?= esc($title) ?>">
-    <meta property="og:description" content="<?= esc($description) ?>">
-    <meta property="og:image" content="<?= esc($poster) ?>">
+    <meta property="og:title" content="<?php echo esc($title); ?>">
+    <meta property="og:description" content="<?php echo esc($description); ?>">
+    <meta property="og:image" content="<?php echo esc($poster); ?>">
     <meta property="og:url"
-          content="https://streamvibe.lovestoblog.com/watch.php?id=<?= rawurlencode($showId) ?>">
+          content="https://streamvibe.lovestoblog.com/watch.php?id=<?php echo rawurlencode($showId); ?>">
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="<?= esc($title) ?>">
-    <meta name="twitter:description" content="<?= esc($description) ?>">
-    <meta name="twitter:image" content="<?= esc($poster) ?>">
+    <meta name="twitter:title" content="<?php echo esc($title); ?>">
+    <meta name="twitter:description" content="<?php echo esc($description); ?>">
+    <meta name="twitter:image" content="<?php echo esc($poster); ?>">
 
   
     <meta name="keywords"
@@ -99,11 +100,11 @@ $url = 'https://streamvibe.lovestoblog.com/watch.php?id=' . $showId;
 
    
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="<?= esc($poster) ?>">
-    <link rel="apple-touch-icon" href="<?= esc($poster) ?>">
+    <link rel="icon" type="image/png" href="<?php echo esc($poster); ?>">
+    <link rel="apple-touch-icon" href="<?php echo esc($poster); ?>">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../public/styles.css">
 
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -573,7 +574,7 @@ syno.textContent = details.overview
                 iframe.title = `${firstSeasonEpisodes[0].name} - Season ${firstSeasonEpisodes[0].season_number} Episode ${firstSeasonEpisodes[0].episode_number}`
 
 
-                  const streamingUrl = getStreamingUrl(<?php echo $showId;?>, firstSeasonEpisodes[0].season_number, firstSeasonEpisodes[0].episode_number, serverId);
+                  const streamingUrl = getStreamingUrl(<?php echo $showId; ?>, firstSeasonEpisodes[0].season_number, firstSeasonEpisodes[0].episode_number, serverId);
 
                     iframe.src = streamingUrl
                   last.src = `${getImageUrl(firstSeasonEpisodes[0].still_path)}`
@@ -589,19 +590,19 @@ syno.textContent = details.overview
 }
 
 
-getShow(<?php echo $showId;?>)
+getShow(<?php echo $showId; ?>)
 
 
 
 seasons.addEventListener("change", async function () {
     const seasonNumber = parseInt(this.value);
 
-    const episodess = await getEpisodes(<?php echo $showId;?>, seasonNumber);
+    const episodess = await getEpisodes(<?php echo $showId; ?>, seasonNumber);
 
 episodes.innerHTML = ""
     episodess.forEach((episode)=>{ episodes.innerHTML += `<option data-one="Season ${episode.season_number}, Episode ${episode.episode_number}: ${episode.name}" data-two="Air Date: ${episode.air_date || 'TBA'}" data-three="${episode.overview || 'No description available.'}" value=${episode.episode_number} data-name=${episode.name} data-src=${getImageUrl(episode.still_path)}> Ep. ${episode.episode_number}: ${episode.name} </option>` })
 
-const streamingUrl = getStreamingUrl(<?php echo $showId;?>, episodess[0].season_number, episodess[0].episode_number, serverId);
+const streamingUrl = getStreamingUrl(<?php echo $showId; ?>, episodess[0].season_number, episodess[0].episode_number, serverId);
 
                     iframe.src = streamingUrl
                   last.src = `${getImageUrl(episodess[0].still_path)}`

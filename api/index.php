@@ -51,7 +51,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../public/styles.css">
 
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
