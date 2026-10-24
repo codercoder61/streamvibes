@@ -33,7 +33,6 @@ curl_setopt_array($ch, [
 
 $response = curl_exec($ch);
 $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
 
 $show = ($response !== false && $status === 200)
     ? json_decode($response, true)
