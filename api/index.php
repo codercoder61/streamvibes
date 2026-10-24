@@ -550,7 +550,7 @@ function renderSearchResults(results) {
 
         const image = result.poster_path
             ? getImageUrl(result.poster_path)
-            : "no_image.jpg";
+            : "../public/no_image.jpg";
 
         return `
             <a
